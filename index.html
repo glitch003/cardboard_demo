@@ -76,30 +76,65 @@
       window.addEventListener('deviceorientation', setOrientationControls, true);
 
 
-      var light = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
-      scene.add(light);
-
-      var texture = THREE.ImageUtils.loadTexture(
-        'textures/patterns/checker.png'
-      );
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat = new THREE.Vector2(50, 50);
-      texture.anisotropy = renderer.getMaxAnisotropy();
-
-      var material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        specular: 0xffffff,
-        shininess: 20,
-        shading: THREE.FlatShading,
-        map: texture
+      // create the sphere's material
+      var sphereMaterial = new THREE.MeshLambertMaterial(
+      {
+          color: 0xFFFFFF
       });
 
-      var geometry = new THREE.PlaneGeometry(1000, 1000);
+      // set up the sphere vars
+      var radius = 50, segments = 16, rings = 16;
 
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.rotation.x = -Math.PI / 2;
-      scene.add(mesh);
+      // create a new mesh with sphere geometry -
+      // we will cover the sphereMaterial next!
+      var sphere = new THREE.Mesh(
+         new THREE.SphereGeometry(radius, segments, rings),
+         sphereMaterial);
+
+      // add the sphere to the scene
+      scene.add(sphere);
+
+      // and the camera
+      scene.add(camera);
+
+      // create a point light
+      var pointLight = new THREE.PointLight( 0xFFFFFF );
+
+      // set its position
+      pointLight.position.x = 10;
+      pointLight.position.y = 50;
+      pointLight.position.z = 130;
+
+      // add to the scene
+      scene.add(pointLight);
+
+      // var light = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
+      // scene.add(light);
+
+      // var texture = THREE.ImageUtils.loadTexture(
+      //   'textures/patterns/checker.png'
+      // );
+      // texture.wrapS = THREE.RepeatWrapping;
+      // texture.wrapT = THREE.RepeatWrapping;
+      // texture.repeat = new THREE.Vector2(50, 50);
+      // texture.anisotropy = renderer.getMaxAnisotropy();
+
+      // var material = new THREE.MeshPhongMaterial({
+      //   color: 0xffffff,
+      //   specular: 0xffffff,
+      //   shininess: 20,
+      //   shading: THREE.FlatShading,
+      //   map: texture
+      // });
+
+      // var geometry = new THREE.PlaneGeometry(1000, 1000);
+
+      // var mesh = new THREE.Mesh(geometry, material);
+      // mesh.rotation.x = -Math.PI / 2;
+      // scene.add(mesh);
+
+
+
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
